@@ -1,18 +1,17 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import { data } from "../data";
 import cellEditFactory from "react-bootstrap-table2-editor";
 import BootstrapTable from "react-bootstrap-table-next";
 
 const TableData = () => {
-  const handleInsertButtonClick = (onClick) => {
-    onClick();
-  };
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const [products, setProducts] = useState(data);
   const [columns, setColumns] = useState([
     { dataField: "id", text: "No.", footer: "" },
     { dataField: "date", text: "Date", footer: "" },
     { dataField: "description", text: "Description", footer: "" },
-    { dataField: "invoice", text: "Invoice No", footer: "Total" },
+    { dataField: "invoice", text: "Invoice No.", footer: "Total" },
     {
       dataField: "amount",
       text: "Amount ($)",
@@ -20,14 +19,14 @@ const TableData = () => {
     },
     {
       dataField: "id",
-      formatter: (rowContent, row) => {
-        //console.log(this);
+      formatter: (cellContent, row) => {
         return (
           <button
             className="btn btn-danger"
             onClick={(e) => {
-              e.persist();
-              console.log(row.movieId);
+              setProducts((_products) =>
+                _products.filter((p) => p.id !== row.id)
+              );
             }}
           >
             Delete
@@ -36,12 +35,16 @@ const TableData = () => {
       },
     },
   ]);
-  const [products, setProducts] = useState(data);
   return (
     <div className="card main-panel">
       <div className="card-body">
         <h5>React Data</h5>
         <div className="container-fluid">
+          <div className="d-flex">
+            <button className="btn btn-success mb-2" onClick={handleShow}>
+              Insert
+            </button>
+          </div>
           <div className="row">
             <BootstrapTable
               keyField="id"
