@@ -4,7 +4,6 @@ import Button from "@restart/ui/esm/Button";
 import logoClose from "../assets/close.png";
 import {useForm} from "react-hook-form";
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const ModalAddCell = (props) => {
